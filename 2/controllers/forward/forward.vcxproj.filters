@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="forward.c" />
+    <ClCompile Include="motor.c">
+      <Filter>data_get</Filter>
+    </ClCompile>
+    <ClCompile Include="pid.c">
+      <Filter>application</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="data_get">
+      <UniqueIdentifier>{ef3b87c7-e1e6-4b2b-a8e7-fc9b3bdabf89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="application">
+      <UniqueIdentifier>{973583a9-710a-48cd-b10f-c60b21a0383c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="motor.h">
+      <Filter>data_get</Filter>
+    </ClInclude>
+    <ClInclude Include="pid.h">
+      <Filter>application</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

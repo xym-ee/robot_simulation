@@ -1,0 +1,131 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Parquetry.proto"
+
+WorldInfo {
+  basicTimeStep 4
+}
+Viewpoint {
+  orientation 0.11801963467285935 0.04385591579004559 -0.992042350145346 2.1643496116561067
+  position 0.8260188358344485 1.1226812890325848 0.31470305456594166
+}
+TexturedBackground {
+  skyColor [
+    0 0 0
+    0 0 0
+    0 0 0
+  ]
+}
+TexturedBackgroundLight {
+}
+Floor {
+  appearance Parquetry {
+    type "light strip"
+    textureTransform TextureTransform {
+      scale 0.2 0.2
+    }
+  }
+}
+Robot {
+  translation 0 0 0.1
+  children [
+    InertialUnit {
+      translation 0 0 0.07
+      name "imu"
+    }
+    DEF body Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0 0 0
+        }
+      }
+      geometry Box {
+        size 0.06 0.1 0.15
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 0.07 -0.06
+      }
+      device [
+        PositionSensor {
+          name "encoder_left"
+        }
+        RotationalMotor {
+          name "motor_left"
+        }
+      ]
+      endPoint DEF wheel1 Solid {
+        translation 0 0.07 -0.06
+        rotation 1 0 0 1.5708
+        children [
+          DEF wheelshape Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.8 0.4 0.5
+              }
+            }
+            geometry Cylinder {
+              height 0.03
+              radius 0.04
+            }
+          }
+        ]
+        name "solid(2)"
+        boundingObject USE wheelshape
+        physics DEF wheel_physics Physics {
+          density -1
+          mass 0.08
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 -0.07 -0.06
+      }
+      device [
+        PositionSensor {
+          name "encoder_right"
+        }
+        RotationalMotor {
+          name "motor_right"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.07 -0.06
+        rotation 1 0 0 1.5708
+        children [
+          DEF wheelshape Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.8 0.4 0.5
+              }
+            }
+            geometry Cylinder {
+              height 0.03
+              radius 0.04
+            }
+          }
+        ]
+        name "solid(1)"
+        boundingObject USE wheelshape
+        physics DEF wheel_physics Physics {
+          density -1
+          mass 0.08
+        }
+      }
+    }
+  ]
+  boundingObject USE body
+  physics Physics {
+    density -1
+    mass 2
+  }
+  controller "forward"
+  window "generic_window"
+}
