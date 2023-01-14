@@ -1,33 +1,27 @@
 #ifndef __PID_H__
 #define __PID_H__
 
-
-
-
-struct _pid_t
+typedef struct 
 {
-    float kp;
-    float ki;
-    float kd;
+    double ref;
+    double feedback;
+    double output;
 
-    float err;
-    float err1;
-    float err2;
+    double kp;
+    double ki;
+    double kd;
 
+    double out_lim;
 
-    float output;
-    float out_lim;
-
-};
-
-
-typedef struct _pid_t* pid_t;
+    double err;
+    double err_sum;
+    double err1;
+} pid_t;
 
 
-
-float pid_controller(pid_t p);
-
-
+double pid_control(pid_t* pid, double ref, double feedback);
+void pid_set_parameter(pid_t* pid, double kp, double ki, double kd);
+void pid_set_output_limit(pid_t* pid, double limit);
 
 
 #endif // !__PID_H__

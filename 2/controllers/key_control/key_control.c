@@ -5,6 +5,7 @@
 #include <webots/keyboard.h>
 #include <math.h>
 #include <stdio.h>
+#include <malloc.h>
 
 #include "pid.h"
 
@@ -21,8 +22,6 @@ int main(int argc, char** argv)
     /*---------------------- motor --------------------*/
     WbDeviceTag motor_left = wb_robot_get_device("motor_left");
     WbDeviceTag motor_right = wb_robot_get_device("motor_right");
-
-    double motor_torque = 0.0;
 
     /*---------------------- encoder --------------------*/
     WbDeviceTag encoder_left = wb_robot_get_device("encoder_left");
@@ -47,28 +46,19 @@ int main(int argc, char** argv)
     printf("init successed ...\n");
 
     /* position pd controller */
-    double position_ref = 40.0;
-    double position_feedback = 0.0;
-    pid_t position_controller;
-
-    pid_set_parameter(&position_controller, 0.011, 0.0, 0.03);
-    pid_set_output_limit(&position_controller, 0.2);
+    double p_ref = 40, p_feedback = 0;
+    double p_err = 0, p_err1 = 0;
+    double p_out = 0;
 
     /* velocity pd controller */
-    double velocity_ref = 0.0;
-    double velocity_feedback = 0.0;
-    pid_t velocity_controller;
-
-    pid_set_parameter(&velocity_controller, 65.0, 0.0, 20.0);
-    pid_set_output_limit(&velocity_controller, 10.0);
+    double velocity_ref = 0, velocity_feedback = 0;
+    double v_err = 0, v_err1 = 0;
+    double v_out = 0;
 
     /* angle pd controller */
-    double angle_ref = 0.0;
-    double angle_feedback = 0.0;
-    pid_t angle_controller;
-
-    pid_set_parameter(&angle_controller, 0.008, 0, 0.05);
-
+    double angle_ref = 0, angle_feedback = 0;
+    double err = 0, err1 = 0;
+    double motor_torque = 0;
 
     while (wb_robot_step(TIME_STEP) != -1)
     {
@@ -77,7 +67,7 @@ int main(int argc, char** argv)
         position_right = wb_position_sensor_get_value(encoder_right);
 
         position = (position_left + position_right) / 2;
-        printf("%f\n", position);
+
         velocity_left = position_left - position_left1;
         velocity_right = position_right - position_right1;
 
@@ -99,27 +89,59 @@ int main(int argc, char** argv)
         pitch = pitch * 180.0 / PI;
         yaw = yaw * 180.0 / PI;
 
-        //printf("roll %f pitch %f yaw %f \n", roll, pitch, yaw);
+        //        printf("roll %f pitch %f yaw %f \n", roll, pitch, yaw);
 
-        /* position pd controller.  */
-        position_feedback = -position;
-        velocity_ref = pid_control(&position_controller, position_ref, position_feedback);
+                /* position pd controller.  */
+        p_feedback = -position;
+        p_err = p_ref - p_feedback;
+        p_out = 0.02 * p_err + 0.1 * (p_err - p_err1);
+        p_err1 = p_err;
+
+        if (p_out > 0.2)
+            p_out = 0.2;
+        if (p_out < -0.2)
+            p_out = -0.2;
+
+        velocity_ref = p_out;
 
         /* velocity pd controller.  */
         velocity_feedback = -velocity;
-        angle_ref = pid_control(&velocity_controller, velocity_ref, velocity_feedback);
+        v_err = velocity_ref - velocity_feedback;
+        v_out = 62.0 * v_err + 0.0 * (v_err - v_err1);
+        v_err1 = v_err;
+
+        if (v_out > 10.0)
+            v_out = 10.0;
+        if (v_out < -10.0)
+            v_out = -10.0;
+
+        angle_ref = v_out;
 
         /* angle pd controller.  */
+        _pid_t _angle_controller;
+        pid_t angle_controller = &_angle_controller;
+        pid_controller_init(angle_controller, 0.008, 0, 0.08);
+
+
+
+        angle_controller->ref = 0;
+        angle_controller->feedback = -pitch;
+
         angle_feedback = -pitch;
-        motor_torque = pid_control(&angle_controller, angle_ref, angle_feedback);
+        err = angle_ref - angle_feedback;
+        motor_torque = 0.008 * err1 + 0.08 * (err - err1);
+        err1 = err;
 
         wb_motor_set_torque(motor_left, motor_torque);
         wb_motor_set_torque(motor_right, motor_torque);
+
     };
 
     wb_robot_cleanup();
+
     return 0;
 }
+
 
 
 

@@ -9,8 +9,8 @@ WorldInfo {
   basicTimeStep 4
 }
 Viewpoint {
-  orientation 0.11801963467285935 0.04385591579004559 -0.992042350145346 2.1643496116561067
-  position 0.8260188358344485 1.1226812890325848 0.31470305456594166
+  orientation 0.14511351659890084 0.1263531731949892 -0.9813138860343604 1.4958987504604058
+  position -1.1326142979135523 3.070829849599254 0.8111316172268287
 }
 TexturedBackground {
   skyColor [
@@ -61,7 +61,7 @@ Robot {
       ]
       endPoint DEF wheel1 Solid {
         translation 0 0.07 -0.06
-        rotation 1 0 0 1.5708
+        rotation 1 -8.439231465925498e-16 -5.88783590645965e-17 1.570799999999996
         children [
           DEF wheelshape Shape {
             appearance Appearance {
@@ -98,7 +98,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0 -0.07 -0.06
-        rotation 1 0 0 1.5708
+        rotation 1 -6.672880693987596e-16 3.9252239376397623e-16 1.5707999999999982
         children [
           DEF wheelshape Shape {
             appearance Appearance {
