@@ -1,45 +1,60 @@
 #include "pid.h"
 
 
-double pid_control(pid_t *pid, double ref, double feedback)
+double controller_output(controller_t *controller, double ref, double feedback)
 {
-    pid->feedback = feedback;
-    pid->ref = ref;
+    controller->feedback = feedback;
+    controller->ref = ref;
 
-    pid->err = pid->ref - pid->feedback;
-    pid->err_sum += pid->err;
-    pid->output = pid->kp * pid->err + \
-                  pid->ki * pid->err_sum + \
-                  pid->kd * (pid->err - pid->err1);
+    controller->err = controller->ref - controller->feedback;
 
-    pid->err1 = pid->err;
-
-    if (pid->out_lim > 1e-8)
+    /* 积分分离，误差过大不积分 */
+    if (controller->err > controller->int_boundary || controller->err < -controller->int_boundary)
     {
-        if (pid->output > pid->out_lim)
-            pid->output = pid->out_lim;
-        if (pid->output < -pid->out_lim)
-            pid->output = -pid->out_lim;
+        controller->err_sum = 0;
+    }
+    else
+    {
+        controller->err_sum += controller->err;
     }
 
-    return pid->output;
+    controller->output = controller->kp * controller->err + \
+                         controller->ki * controller->err_sum + \
+                         controller->kd * (controller->err - controller->err1);
+
+    controller->err1 = controller->err;
+
+    /* 输出限幅 */
+    if (controller->out_lim > 1e-8)
+    {
+        if (controller->output > controller->out_lim)
+            controller->output = controller->out_lim;
+        if (controller->output < -controller->out_lim)
+            controller->output = -controller->out_lim;
+    }
+
+    return controller->output;
 }
 
-void pid_set_parameter(pid_t* pid, double kp, double ki, double kd)
+void controller_set_pid_parameter(controller_t *controller, double kp, double ki, double kd)
 {
-    pid->kp = kp;
-    pid->ki = ki;
-    pid->kd = kd;
+    controller->kp = kp;
+    controller->ki = ki;
+    controller->kd = kd;
 
-    pid->ref = 0;
-    pid->feedback = 0;
-    pid->err_sum = 0.0;
-    pid->output = 0;
+    controller->ref = 0.0;
+    controller->feedback = 0.0;
+    controller->output = 0.0;
+
+    controller->err = 0.0;
+    controller->err1 = 0.0;
+
+    controller->err_sum = 0.0;
 }
 
-void pid_set_output_limit(pid_t* pid, double limit)
+void controller_set_output_limit(controller_t *controller, double limit)
 {
-    pid->out_lim = limit;
+    controller->out_lim = limit;
 }
 
 

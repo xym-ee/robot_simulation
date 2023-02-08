@@ -49,26 +49,25 @@ int main(int argc, char** argv)
     /* position pd controller */
     double position_ref = 40.0;
     double position_feedback = 0.0;
-    pid_t position_controller;
+    controller_t position_controller;
 
-    pid_set_parameter(&position_controller, 0.011, 0.0, 0.03);
-    pid_set_output_limit(&position_controller, 0.2);
+    controller_set_pid_parameter(&position_controller, 0.011, 0.0, 0.03);
+    controller_set_output_limit(&position_controller, 0.2);
 
     /* velocity pd controller */
     double velocity_ref = 0.0;
     double velocity_feedback = 0.0;
-    pid_t velocity_controller;
+    controller_t velocity_controller;
 
-    pid_set_parameter(&velocity_controller, 65.0, 0.0, 20.0);
-    pid_set_output_limit(&velocity_controller, 10.0);
+    controller_set_pid_parameter(&velocity_controller, 65.0, 0.0, 20.0);
+    controller_set_output_limit(&velocity_controller, 10.0);
 
     /* angle pd controller */
     double angle_ref = 0.0;
     double angle_feedback = 0.0;
-    pid_t angle_controller;
+    controller_t angle_controller;
 
-    pid_set_parameter(&angle_controller, 0.008, 0, 0.05);
-
+    controller_set_pid_parameter(&angle_controller, 0.008, 0, 0.05);
 
     while (wb_robot_step(TIME_STEP) != -1)
     {
@@ -103,15 +102,15 @@ int main(int argc, char** argv)
 
         /* position pd controller.  */
         position_feedback = -position;
-        velocity_ref = pid_control(&position_controller, position_ref, position_feedback);
+        velocity_ref = controller_output(&position_controller, position_ref, position_feedback);
 
         /* velocity pd controller.  */
         velocity_feedback = -velocity;
-        angle_ref = pid_control(&velocity_controller, velocity_ref, velocity_feedback);
+        angle_ref = controller_output(&velocity_controller, velocity_ref, velocity_feedback);
 
         /* angle pd controller.  */
         angle_feedback = -pitch;
-        motor_torque = pid_control(&angle_controller, angle_ref, angle_feedback);
+        motor_torque = controller_output(&angle_controller, angle_ref, angle_feedback);
 
         wb_motor_set_torque(motor_left, motor_torque);
         wb_motor_set_torque(motor_right, motor_torque);

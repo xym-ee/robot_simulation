@@ -1,0 +1,317 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/UnevenTerrain.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.04781205835874594 0.9880057966094272 -0.14682831110406142 0.6366883609136937
+  position -1.2433639120791002 0.0025926829958062923 0.994200645253896
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+UnevenTerrain {
+  size 3 3 0
+}
+Robot {
+  translation 0 0 0.2
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.06 -0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "servo_rf"
+        }
+      ]
+      endPoint Solid {
+        translation 0.12 -0.12 0
+        rotation 0 1 0 0
+        children [
+          DEF shape3 Shape {
+            geometry Box {
+              size 0.14 0.01 0.02
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 1 0
+              anchor 0.06 -0.01 0
+            }
+            endPoint Solid {
+              translation -0.03 -0.01 0
+              rotation 0 1 0 0
+              children [
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 1 0
+                    anchor -0.09 -0.01 0
+                  }
+                  device [
+                    RotationalMotor {
+                      name "motor_r"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation -0.09 -0.02 0
+                    rotation 1 0 0 1.5707999999999998
+                    children [
+                      DEF shape5 Shape {
+                        geometry Cylinder {
+                          height 0.03
+                          radius 0.03
+                        }
+                      }
+                    ]
+                    boundingObject USE shape5
+                    physics Physics {
+                      density -1
+                      mass 0.2
+                    }
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 1 0
+                    anchor -0.09 -0.01 0
+                  }
+                  endPoint SolidReference {
+                    solidName "solid22"
+                  }
+                }
+                DEF shape4 Shape {
+                  geometry Box {
+                    size 0.2 0.01 0.02
+                  }
+                }
+              ]
+              name "solid24"
+              boundingObject USE shape4
+              physics Physics {
+                density -1
+                mass 0.2
+              }
+            }
+          }
+        ]
+        name "solid23"
+        boundingObject USE shape3
+        physics Physics {
+          density -1
+          mass 0.2
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.06 -0.1 0
+      }
+      device [
+        RotationalMotor {
+          name "servo_rb"
+        }
+      ]
+      endPoint Solid {
+        translation -0.12 -0.11 0
+        rotation 0 1 0 0
+        children [
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 1 0
+              anchor -0.06 -0.12 0
+            }
+            endPoint Solid {
+              translation 0.03 -0.009999999999999995 0
+              rotation 0 1 0 0
+              children [
+                DEF liangan1 Shape {
+                  geometry Box {
+                    size 0.2 0.01 0.02
+                  }
+                }
+              ]
+              name "solid22"
+              boundingObject USE liangan1
+              physics Physics {
+                density -1
+                mass 0.2
+              }
+            }
+          }
+          DEF liangan Shape {
+            geometry Box {
+              size 0.14 0.01 0.02
+            }
+          }
+        ]
+        name "solid21"
+        boundingObject USE liangan
+        physics Physics {
+          density -1
+          mass 0.2
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.06 0.12 0
+      }
+      device [
+        RotationalMotor {
+          name "servo_lf"
+        }
+      ]
+      endPoint Solid {
+        translation 0.12 0.12 0
+        rotation 0 1 0 0
+        children [
+          DEF shape3 Shape {
+            geometry Box {
+              size 0.14 0.01 0.02
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 1 0
+              anchor 0.06 0.01 0
+            }
+            endPoint Solid {
+              translation -0.03 0.01 0
+              rotation 0 1 0 0
+              children [
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 1 0
+                    anchor -0.09 0.01 0
+                  }
+                  device [
+                    RotationalMotor {
+                      name "motor_l"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation -0.09 0.019999999999999997 0
+                    rotation 0.9772078851161252 0.1501076009647793 -0.1501081523417978 1.5938538271878633
+                    children [
+                      DEF shape5 Shape {
+                        geometry Cylinder {
+                          height 0.03
+                          radius 0.03
+                        }
+                      }
+                    ]
+                    boundingObject USE shape5
+                    physics Physics {
+                      density -1
+                      mass 0.2
+                    }
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 1 0
+                    anchor -0.09 -0.01 0
+                  }
+                  endPoint SolidReference {
+                    solidName "solid2"
+                  }
+                }
+                DEF shape4 Shape {
+                  geometry Box {
+                    size 0.2 0.01 0.02
+                  }
+                }
+              ]
+              name "solid4"
+              boundingObject USE shape4
+              physics Physics {
+                density -1
+                mass 0.2
+              }
+            }
+          }
+        ]
+        name "solid3"
+        boundingObject USE shape3
+        physics Physics {
+          density -1
+          mass 0.2
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.06 0.1 0
+      }
+      device [
+        RotationalMotor {
+          name "servo_lb"
+        }
+      ]
+      endPoint Solid {
+        translation -0.12 0.11 0
+        rotation 0 1 0 0
+        children [
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 1 0
+              anchor -0.06 0.12 0
+            }
+            endPoint Solid {
+              translation 0.03 0.009999999999999995 0
+              rotation 0 1 0 0
+              children [
+                DEF liangan1 Shape {
+                  geometry Box {
+                    size 0.2 0.01 0.02
+                  }
+                }
+              ]
+              name "solid2"
+              boundingObject USE liangan1
+              physics Physics {
+                density -1
+                mass 0.2
+              }
+            }
+          }
+          DEF liangan Shape {
+            geometry Box {
+              size 0.14 0.01 0.02
+            }
+          }
+        ]
+        name "solid1"
+        boundingObject USE liangan
+        physics Physics {
+          density -1
+          mass 0.2
+        }
+      }
+    }
+    DEF body Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.305882 0.305882 0.305882
+        }
+      }
+      geometry Box {
+        size 0.18 0.2 0.05
+      }
+    }
+  ]
+  boundingObject USE body
+  physics Physics {
+    density -1
+    mass 0.4
+  }
+}

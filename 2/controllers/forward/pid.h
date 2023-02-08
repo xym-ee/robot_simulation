@@ -13,15 +13,20 @@ typedef struct
 
     double out_lim;
 
+    double int_lim;
+    double int_boundary;
+
     double err;
-    double err_sum;
     double err1;
-} pid_t;
+    double err_sum;
+} controller_t;
 
 
-double pid_control(pid_t* pid, double ref, double feedback);
-void pid_set_parameter(pid_t* pid, double kp, double ki, double kd);
-void pid_set_output_limit(pid_t* pid, double limit);
+double controller_output(controller_t* controller, double ref, double feedback);
+
+void controller_set_pid_parameter(controller_t* controller, double kp, double ki, double kd);
+
+void controller_set_output_limit(controller_t* controller, double limit);
 
 
 #endif // !__PID_H__
