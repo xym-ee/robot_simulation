@@ -1,9 +1,13 @@
 #include "motor.h"
 
+motor_t motor =
+{
+    .left.control.mode = MODE_TORQUE,
+    .right.control.mode = MODE_TORQUE,
+};
 
 WbDeviceTag motor_left;
 WbDeviceTag motor_right;
-
 
 void motor_init(void)
 {

@@ -120,13 +120,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="control\pid.c" />
+    <ClCompile Include="driver\imu.c" />
+    <ClCompile Include="driver\motor.c" />
     <ClCompile Include="forward.c" />
-    <ClCompile Include="motor.c" />
-    <ClCompile Include="pid.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="motor.h" />
-    <ClInclude Include="pid.h" />
+    <ClInclude Include="control\pid.h" />
+    <ClInclude Include="driver\imu.h" />
+    <ClInclude Include="driver\motor.h" />
+    <ClInclude Include="rtdef.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

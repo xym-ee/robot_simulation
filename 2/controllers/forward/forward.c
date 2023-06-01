@@ -6,7 +6,12 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "pid.h"
+
+#include "driver/motor.h"
+#include "driver/imu.h"
+
+#include "control/pid.h"
+
 
 #define TIME_STEP   8
 

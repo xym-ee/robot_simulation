@@ -2,27 +2,34 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="forward.c" />
-    <ClCompile Include="motor.c">
-      <Filter>data_get</Filter>
+    <ClCompile Include="driver\imu.c">
+      <Filter>driver</Filter>
     </ClCompile>
-    <ClCompile Include="pid.c">
-      <Filter>application</Filter>
+    <ClCompile Include="driver\motor.c">
+      <Filter>driver</Filter>
+    </ClCompile>
+    <ClCompile Include="control\pid.c">
+      <Filter>control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="data_get">
-      <UniqueIdentifier>{ef3b87c7-e1e6-4b2b-a8e7-fc9b3bdabf89}</UniqueIdentifier>
+    <Filter Include="driver">
+      <UniqueIdentifier>{6605a8b7-cf6e-4776-ab17-47ae3528f4c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="application">
-      <UniqueIdentifier>{973583a9-710a-48cd-b10f-c60b21a0383c}</UniqueIdentifier>
+    <Filter Include="control">
+      <UniqueIdentifier>{e332242c-f887-43b2-ba11-02145808e4bf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="motor.h">
-      <Filter>data_get</Filter>
+    <ClInclude Include="driver\imu.h">
+      <Filter>driver</Filter>
     </ClInclude>
-    <ClInclude Include="pid.h">
-      <Filter>application</Filter>
+    <ClInclude Include="driver\motor.h">
+      <Filter>driver</Filter>
     </ClInclude>
+    <ClInclude Include="control\pid.h">
+      <Filter>control</Filter>
+    </ClInclude>
+    <ClInclude Include="rtdef.h" />
   </ItemGroup>
 </Project>
